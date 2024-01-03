@@ -90,13 +90,13 @@ end_time = time.time() + attack_time
 def user_agent():
     global uagent
     
-    with open('DDoS/user_agent.txt', 'r') as ua:
+    with open('user_agent.txt', 'r') as ua:
         uagent = [line.strip() for line in ua.readlines()]
     return uagent
 
 def my_bots():
     global bots
-    with open('DDoS/referers.txt', 'r') as b:
+    with open('referers.txt', 'r') as b:
         bots = [line.strip() for line in b.readlines()]
     return bots
 
