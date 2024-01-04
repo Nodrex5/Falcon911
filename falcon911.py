@@ -55,7 +55,7 @@ def infoTool():
 os.system("clear")
 # Function to print gradient logo
 def print_gradient_logo():
-    logo = pyfiglet.figlet_format('Falcon 911', font='starwars')
+    logo = pyfiglet.figlet_format('Falcon 911', font='speed')
     gradient_colors = [
         '\033[91m',
 
