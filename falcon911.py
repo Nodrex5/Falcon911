@@ -132,7 +132,7 @@ def down_it(item):
 
             if s.sendto(packet, (host, int(port))):
                 s.close()
-                print(f'{F}[{sent}] {L}Sent Request! Size: {F}{len(packet)}')
+                print(f'{F}[ {sent} ] {L}Sent Request! Size: {F}{len(packet)}')
             else:
                 s.close()
                 print("\033[91mshut<->down\033[0m")
