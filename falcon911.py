@@ -25,7 +25,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.0'
+__version__ = '7.3'
 __status__ = "being developed ..."
 # —----——----—---——----
 
@@ -55,7 +55,7 @@ def infoTool():
 os.system("clear")
 # Function to print gradient logo
 def print_gradient_logo():
-    logo = pyfiglet.figlet_format('Falcon 911', font='slant')
+    logo = pyfiglet.figlet_format('Falcon 911', font='speed')
     gradient_colors = [
         '\033[91m',
 
