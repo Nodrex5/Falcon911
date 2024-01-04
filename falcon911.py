@@ -25,7 +25,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.3'
+__version__ = '7.4'
 __status__ = "being developed ..."
 # —----——----—---——----
 
