@@ -9,7 +9,6 @@ from queue import Queue
 import urllib.request
 import requests
 from halo import Halo
-from DDoS import userAgent
 
 # Colors
 Z1 = '\033[95m'  # بنفسجي
@@ -27,7 +26,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.3'
+__version__ = '7.5'
 __status__ = "being developed ..."
 # —----——----—---——----
 
