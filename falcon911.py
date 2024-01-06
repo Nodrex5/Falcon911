@@ -10,6 +10,7 @@ import urllib.request
 import requests
 from halo import Halo
 from colorama import Fore
+from logo import logo
 
 # Colors
 Z1 = '\033[95m'  # بنفسجي
@@ -27,7 +28,7 @@ U = '\033[4m' #مسطر
 
 # -- Info -- #
 __author__ = 'Al-Mohammady Team'
-__version__ = '7.5 [ BETA ]'
+__version__ = '7.6 [ BETA ]'
 __status__ = "being developed ..."
 # —----——----—---——----
 
@@ -56,6 +57,7 @@ def infoTool():
 
 os.system("clear")
 # Function to print gradient logo
+'''
 def print_gradient_logo():
     logo = pyfiglet.figlet_format('Falcon 911', font='slant')
     gradient_colors = [
@@ -67,7 +69,8 @@ def print_gradient_logo():
         print(gradient_colors[i % len(gradient_colors)] + line)
 
 # Print the gradient logo
-print_gradient_logo()
+print_gradient_logo()'''
+logo()
 infoTool()
 print(Fore.LIGHTBLACK_EX+'\n–– FALCON Run ––\n')
 
@@ -78,7 +81,7 @@ delay_time = int(input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}Delay time : "))
 
 
 os.system("clear")
-print_gradient_logo()
+logo()
 print("%sAttack Starting To IP %s%s %susing Port %s%s" % (Fore.GREEN, Fore.YELLOW, host, Fore.GREEN, Fore.YELLOW, port))
 print(f'{Fore.GREEN}Attack finished after {Fore.YELLOW}{attack_time}{Fore.GREEN} seconds.\n')
 spinner = Halo(text='Loading', color='red', spinner='hamburger')
@@ -95,8 +98,7 @@ def user_agent():
     with open('user_agent.txt', 'r') as ug:
         uagent = [line.strip() for line in ug.readlines()]
     return uagent
-    
-print(random.choice(user_agent()))
+
 
 def my_bots():
     global bots
