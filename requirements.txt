@@ -1,5 +1,4 @@
 pyfiglet
-socket
 requests
 time
 colorama==0.4.6
