@@ -4,5 +4,4 @@ colorama==0.4.6
 halo==0.0.31
 futures
 urllib3
-threading
 re
