@@ -1,4 +1,4 @@
-import sys, os, system
+import sys, os
 import time
 import pyfiglet
 from halo import Halo
@@ -12,7 +12,7 @@ __version__ = '8.0'
 __series__ = 'Attack.'
 
 # -----------
-system.os('clear')
+os.system('clear')
 def infoTool():
 	spinner = Halo()
 	spinner.start()
