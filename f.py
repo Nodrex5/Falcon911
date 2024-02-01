@@ -42,12 +42,12 @@ try:
 	methodInput = (int(input(f'{Fore.GREEN}[ ~ ]{Fore.RED} method ~#{Fore.GREEN}')))
 	if methodInput==1:
 		os.system('clear')
-		subprocess.run(["python","udp.py"])
+		subprocess.run(["python","fu.py"])
 	elif methodInput==2:
 		print('soon ...')
 	elif methodInput==3:
 		os.system('clear')
-		subprocess.run(["python","hulk.py"])
+		subprocess.run(["python","fh.py"])
 	else:
 		print(f'{Fore.RED}[ ! ]{Fore.CYAN} Please choose one of the numbers in the list.')
 except ValueError as e:
