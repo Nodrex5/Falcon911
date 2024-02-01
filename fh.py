@@ -51,15 +51,13 @@ def useragent_list():
     global headers_useragents
     headers_useragents = read_file('Tools/user_agent.txt')
     return headers_useragents
-
+"""
 
  #generates a referer array
 def referer_list():
     global headers_referers
     headers_referers = read_file('Tools/referers.txt')
     return headers_referers
-
-"""
 
  #builds random ASCII string
 def buildblock(size):
