@@ -1,10 +1,10 @@
-pyfiglet==1.0.2
+pyfiglet
 socket
 requests
 time
 colorama==0.4.6
 halo==0.0.31
-futures==3.4.0
-urllib3==2.2.0
+futures
+urllib3
 threading
 re
