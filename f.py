@@ -12,7 +12,7 @@ __version__ = '8.0'
 __series__ = 'Attack.'
 
 # -----------
-
+system.os('clear')
 def infoTool():
 	spinner = Halo()
 	spinner.start()
