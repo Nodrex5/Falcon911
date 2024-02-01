@@ -45,16 +45,21 @@ def read_file(file_path, sample_size=2):
     return random.sample([item.strip() for item in data], sample_size)
 
  #generates a user agent array
+
+"""
 def useragent_list():
     global headers_useragents
     headers_useragents = read_file('Tools/user_agent.txt')
     return headers_useragents
+
 
  #generates a referer array
 def referer_list():
     global headers_referers
     headers_referers = read_file('Tools/referers.txt')
     return headers_referers
+
+"""
 
  #builds random ASCII string
 def buildblock(size):
@@ -68,8 +73,7 @@ def usage():
 
  #http request
 def httpcall(url):
-    useragent_list()
-    referer_list()
+    
     code = 0
     if url.count("?") > 0:
         param_joiner = "&"
@@ -126,6 +130,7 @@ if __name__ == "__main__":
     os.system('clear')
     #print(random_ipFake())
     logo()
+    #print(random.choice(uagent))
     usage()
     #print(random.choice(uagent))
     
