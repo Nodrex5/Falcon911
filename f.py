@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, system
 import time
 import pyfiglet
 from halo import Halo
