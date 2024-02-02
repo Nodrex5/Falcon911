@@ -8,7 +8,7 @@ import threading
 import string
 from halo import Halo
 from Tools.logo import logo
-from Tools.ipFake import random_ipFake
+from ipFake import random_ipFake
 from Tools.userAgent import uagent
 # -------------------------
 global params
