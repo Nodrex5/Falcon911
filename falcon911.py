@@ -3,7 +3,7 @@ import time
 import pyfiglet
 from halo import Halo
 from colorama import Fore
-from logo import logo
+from Tools.logo import logo
 import subprocess
 # -----------
 
@@ -22,7 +22,7 @@ def infoTool():
 
 
 infoTool()
-print(f"{Fore.LIGHTBLACK_EX}-- Falcon 911 -- {Fore.RESET}")
+#print(f"{Fore.LIGHTBLACK_EX}-- Falcon 911 -- {Fore.RESET}")
 
 # --------
 methodList = [
@@ -41,12 +41,12 @@ try:
         methodInput = (int(input(f'{Fore.GREEN}[ ~ ]{Fore.LIGHTRED_EX} method ~#{Fore.GREEN}')))
         if methodInput==1:
                 os.system('clear')
-                subprocess.run(["python","fu.py"])
+                subprocess.run(["python","Tools/fu.py"])
         elif methodInput==2:
                 print('soon ...')
         elif methodInput==3:
                 os.system('clear')
-                subprocess.run(["python","fh.py"])
+                subprocess.run(["python","Tools/fh.py"])
         else:
                 print(f'{Fore.RED}[ ! ]{Fore.CYAN} Please choose one of the numbers in the list.')
 except ValueError as e:
