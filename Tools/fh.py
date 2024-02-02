@@ -1,4 +1,40 @@
-impordef set_safe():
+import urllib.request
+import concurrent.futures
+import random
+import re
+import sys,os
+from colorama import Fore
+import threading
+import string
+from halo import Halo
+from logo import logo
+from ipFake import random_ipFake
+from userAgent import uagent
+# -------------------------
+global params
+url = ''
+host = ''
+headers_useragents = []
+headers_referers = []
+request_counter = 0
+flag = 0
+safe = 0
+__version__ = '8.0'
+__author__ = "Al-Mohammady Team."
+__method__ = 'HTTP'
+
+
+
+
+def inc_counter():
+    global request_counter
+    request_counter += 1
+
+def set_flag(val):
+    global flag
+    flag = val
+
+def set_safe():
     global safe
     safe = 1
 
@@ -10,17 +46,16 @@ def read_file(file_path, sample_size=2):
 
  #generates a user agent array
 
-"""
-def useragent_list():
-    global headers_useragents
-    headers_useragents = read_file('Tools/user_agent.txt')
-    return headers_useragents
-"""
+#def useragent_list():
+#    global headers_useragents
+#    headers_useragents = read_file('user_agent.txt')
+#    return headers_useragents
+
 
  #generates a referer array
 def referer_list():
     global headers_referers
-    headers_referers = read_file('Tools/referers.txt')
+    headers_referers = read_file('referers.txt')
     return headers_referers
 
  #builds random ASCII string
