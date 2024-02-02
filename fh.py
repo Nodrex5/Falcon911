@@ -7,9 +7,9 @@ from colorama import Fore
 import threading
 import string
 from halo import Halo
-from logo import logo
-from ipFake import random_ipFake
-from userAgent import uagent
+from Tools.logo import logo
+from Tools.ipFake import random_ipFake
+from Tools.userAgent import uagent
 # -------------------------
 global params
 url = ''
@@ -39,10 +39,6 @@ def set_safe():
     safe = 1
 
 #Read data from file
-def read_file(file_path, sample_size=2):
-    with open(file_path, 'r') as file:
-        data = file.readlines()
-    return random.sample([item.strip() for item in data], sample_size)
 
  #generates a user agent array
 
@@ -55,7 +51,10 @@ def read_file(file_path, sample_size=2):
  #generates a referer array
 def referer_list():
     global headers_referers
-    headers_referers = read_file('referers.txt')
+    with open('Tools/referers.txt', 'r') as file:
+        data = file.readlines()
+        headers_referers = random.sample([item.strip() for item in data], 2)
+    
     return headers_referers
 
  #builds random ASCII string
