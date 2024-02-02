@@ -5,10 +5,14 @@ from colorama import Fore
 import threading
 import sys, os
 from logo import logo
+from halo import Halo
+__version__ = '8.0'
+__author__ = "Al-Mohammady Team."
+__method__ = 'UDP'
 
 def userAgent():
     global uagent
-    with open('Tools/user_agent.txt', 'r') as ug:
+    with open('user_agent.txt', 'r') as ug:
         uagent = [line.strip() for line in ug.readlines()]
     return uagent
 
@@ -44,6 +48,13 @@ def dos1():
     sys.exit(1)
 
 # --------
+def usage():
+    spinner = Halo()
+    spinner.succeed(f'Method : {__method__}.')
+    spinner.stop()
+    print('-'*40)
+    
+usage()
 
 host = input(f"{Fore.GREEN}[ ? ]{Fore.YELLOW} IP Target  : ")
 port = int(input(f"{Fore.GREEN}[ ? ] {Fore.YELLOW}Port       : "))
