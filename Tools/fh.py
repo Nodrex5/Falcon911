@@ -1,3 +1,39 @@
+import urllib.request
+import concurrent.futures
+import random
+import re
+import sys,os
+from colorama import Fore
+import threading
+import string
+from halo import Halo
+from logo import logo
+from ipFake import random_ipFake
+from userAgent import uagent
+# -------------------------
+global params
+url = ''
+host = ''
+headers_useragents = []
+headers_referers = []
+request_counter = 0
+flag = 0
+safe = 0
+__version__ = '8.0'
+__author__ = "Al-Mohammady Team."
+__method__ = 'HTTP'
+
+
+
+
+def inc_counter():
+    global request_counter
+    request_counter += 1
+
+def set_flag(val):
+    global flag
+    flag = val
+
 def set_safe():
     global safe
     safe = 1
@@ -15,7 +51,7 @@ def set_safe():
  #generates a referer array
 def referer_list():
     global headers_referers
-    with open('Tools/referers.txt', 'r') as file:
+    with open('referers.txt', 'r') as file:
         data = file.readlines()
         headers_referers = random.sample([item.strip() for item in data], 2)
     
@@ -88,7 +124,7 @@ def monitor_thread():
  #execute
 if __name__ == "__main__":
     os.system('clear')
-    #print(random_ipFake())
+    print(random_ipFake())
     logo()
     #print(random.choice(uagent))
     usage()
