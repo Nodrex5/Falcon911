@@ -4,7 +4,7 @@ import time
 from colorama import Fore
 import threading
 import sys, os
-from Tools.logo import logo
+from logo import logo
 from halo import Halo
 __version__ = '8.0'
 __author__ = "Al-Mohammady Team."
