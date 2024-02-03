@@ -1,39 +1,3 @@
-import urllib.request
-import concurrent.futures
-import random
-import re
-import sys,os
-from colorama import Fore
-import threading
-import string
-from halo import Halo
-from Tools.logo import logo
-from ipFake import random_ipFake
-from Tools.userAgent import uagent
-# -------------------------
-global params
-url = ''
-host = ''
-headers_useragents = []
-headers_referers = []
-request_counter = 0
-flag = 0
-safe = 0
-__version__ = '8.0'
-__author__ = "Al-Mohammady Team."
-__method__ = 'HTTP'
-
-
-
-
-def inc_counter():
-    global request_counter
-    request_counter += 1
-
-def set_flag(val):
-    global flag
-    flag = val
-
 def set_safe():
     global safe
     safe = 1
