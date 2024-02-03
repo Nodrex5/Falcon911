@@ -12,7 +12,7 @@ __method__ = 'UDP'
 
 def userAgent():
     global uagent
-    with open('Tools/user_agent.txt', 'r') as ug:
+    with open('user_agent.txt', 'r') as ug:
         uagent = [line.strip() for line in ug.readlines()]
     return uagent
 
