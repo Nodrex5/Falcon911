@@ -124,7 +124,7 @@ def monitor_thread():
  #execute
 if __name__ == "__main__":
     os.system('clear')
-    print(random_ipFake())
+    #print(random_ipFake())
     logo()
     #print(random.choice(uagent))
     usage()
