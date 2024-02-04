@@ -7,5 +7,5 @@ $ pip install -r requirements.txt
 
 $ cd Falcon911
 
-$ python3 Falcon911
+$ python3 falcon911.py
 
