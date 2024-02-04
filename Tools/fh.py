@@ -51,7 +51,7 @@ def set_safe():
  #generates a referer array
 def referer_list():
     global headers_referers
-    with open('referers.txt', 'r') as file:
+    with open('Tools/referers.txt', 'r') as file:
         data = file.readlines()
         headers_referers = random.sample([item.strip() for item in data], 2)
     
