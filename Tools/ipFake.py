@@ -6,7 +6,7 @@ def createIP():
 	return ip
 	
 def random_ipFake():
-	with open('fake_ip.txt','r') as ip:
+	with open('Tools/fake_ip.txt','r') as ip:
 		list_ip = [line.strip() for line in ip.readlines()]
 		for _ in range(10):
 			list_ip.append(createIP())
