@@ -8,7 +8,7 @@ import subprocess
 # -----------
 
 __author__ = 'Al-Mohammady Team.'
-__version__ = '8.0'
+__version__ = '8.2'
 __series__ = 'Attack.'
 
 # -----------
@@ -41,15 +41,18 @@ try:
         methodInput = (int(input(f'{Fore.GREEN}[ ~ ]{Fore.LIGHTRED_EX} method ~#{Fore.GREEN}')))
         if methodInput==1:
                 os.system('clear')
-                subprocess.run(["python","Tools/fu.py"])
+                fh_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Tools", "fu.py")
+                subprocess.run(["python", fh_path])
         elif methodInput==2:
                 print('soon ...')
         elif methodInput==3:
-                os.system('clear')
-                subprocess.run(["python","Tools/fh.py"])
+        	os.system('clear')
+        	fh_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Tools", "fh.py")
+        	subprocess.run(["python", fh_path])
         else:
-                print(f'{Fore.RED}[ ! ]{Fore.CYAN} Please choose one of the numbers in the list.')
+        	print(f"{Fore.RED}Not Found !")
+        	
 except ValueError as e:
-        print(e)
+        print(f"{Fore.RED}Error, Enter The Number !, Ex : 3.")
         
         
