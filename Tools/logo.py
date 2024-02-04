@@ -7,7 +7,7 @@ def logo():
   / /_  / __ `/ / ___/ __ \/ __ \   / /_/ / // /
  / __/ / /_/ / / /__/ /_/ / / / /   \__, / // /
 /_/    \__,_/_/\___/\____/_/ /_/   /____/_//_/
-			Created By Al-Mohammady{Fore.RESET}
+                        {Fore.LIGHTBLACK_EX}created By Al-Mohammady{Fore.RESET}
 ''')
-
+logo()
 
