@@ -8,7 +8,7 @@ import subprocess
 # -----------
 
 __author__ = 'Al-Mohammady Team.'
-__version__ = '8.2'
+__version__ = '8.8'
 __series__ = 'Attack.'
 
 # -----------
