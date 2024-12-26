@@ -80,17 +80,20 @@ def httpcall(url):
     }
 
     try:
+        while True:
         # إرسال الطلب
-        req = urllib.request.Request(request_url, headers=headers)
-        urllib.request.urlopen(req)
+        	req = urllib.request.Request(request_url, headers=headers)
+        	urllib.request.urlopen(req)
     except urllib.error.HTTPError as e:
         set_flag(1)
         print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA} Response Code !")
         code = e.code
     except urllib.error.URLError as e:
-        print(f"{Fore.RED}Error: {e.reason}")
+        return True
+        #print(f"{Fore.RED}Error: {e.reason}")
     except Exception as e:
-        print(f"{Fore.RED}Unexpected error: {e} - يتم تجاهله.")
+        #print(f"{Fore.RED}Unexpected error: {e} - يتم تجاهله.")
+        return True
     else:
         inc_counter()
 
