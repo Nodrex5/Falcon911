@@ -22,7 +22,7 @@ flag = 0
 safe = 0
 __version__ = '8.0 BETA'
 __author__ = "Al-Mohammady Team."
-__method__ = 'HTTP'
+__method__ = 'HTTP V 2'
 
 
 def inc_counter():
