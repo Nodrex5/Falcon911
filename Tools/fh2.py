@@ -153,8 +153,8 @@ if __name__ == "__main__":
 
     # Continuous request sending with while True
     while True:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=700) as executor:
-            future_to_url = {executor.submit(http_caller, url): url for _ in range(700)}
+        with concurrent.futures.ThreadPoolExecutor(max_workers=400) as executor:
+            future_to_url = {executor.submit(http_caller, url): url for _ in range(400)}
 
             # Starting the monitor thread
             t = threading.Thread(target=monitor_thread)
