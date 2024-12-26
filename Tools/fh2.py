@@ -89,7 +89,8 @@ def httpcall(url):
         code = e.code
     except urllib.error.URLError as e:
         print(f"{Fore.RED}Error: {e.reason}")
-        sys.exit()
+    except Exception as e:
+        print(f"{Fore.RED}Unexpected error: {e} - يتم تجاهله.")
     else:
         inc_counter()
 
