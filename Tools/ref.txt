@@ -1,0 +1,3 @@
+http://www.google.com/?q=
+http://www.instagram.com/?q=
+http://www.facebook.com/?q=
