@@ -48,8 +48,12 @@ def set_safe():
     safe = True
 
 def buildblock(size):
-    """إنشاء نص عشوائي بحجم معين."""
-    return ''.join(random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ") for _ in range(size))
+    out_str = ''
+    for _ in range(0, size):
+        a = random.randint(65, 90)
+        out_str += chr(a)
+        
+    return(out_str)
 
 def usage():
     """عرض معلومات الاستخدام."""
