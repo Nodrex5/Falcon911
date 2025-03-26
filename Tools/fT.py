@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no): ").strip().lower()
 
-				thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads: "))
+thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads: "))
 
 
     if safe_option == "yes":
