@@ -24,7 +24,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '8.0 BETA'
+__version__ = '2.0 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
@@ -58,6 +58,7 @@ def buildblock(size):
 def usage():
     """عرض معلومات الاستخدام."""
     spinner = Halo()
+    spinner.succeed(f'Version Script: {__version__}')
     spinner.succeed(f'Method: {__method__}')
     spinner.stop()
     print('-' * 40)
