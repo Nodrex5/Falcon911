@@ -1,4 +1,4 @@
-كimport urllib.request
+import urllib.request
 import threading
 import random
 import time
