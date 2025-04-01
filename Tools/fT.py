@@ -4,7 +4,7 @@ lock = Lock() fake = Faker() ua = UserAgent()
 
 url = '' host = '' request_counter = 0 flag = 0 safe = False
 
-version = '2.6 BETA' author = "Al-Mohammady Team" method = 'HTTP V2 BETA'
+version = '2.5 BETA' author = "Al-Mohammady Team" method = 'HTTP V2 BETA'
 
 def inc_counter(): global request_counter with lock: request_counter += 1
 
@@ -12,7 +12,7 @@ def set_flag(val): global flag flag = val
 
 def set_safe(): global safe safe = True
 
-def buildblock(size): return ''.join(chr(random.randint(65, 90)) for _ in range(size))
+def buildblock(size): out_str = '' for _ in range(0, size): a = random.randint(65, 90) out_str += chr(a) return out_str
 
 def usage(): spinner = Halo() spinner.succeed(f'Version Script: {version}') spinner.succeed(f'Method: {method}') spinner.stop() print('-' * 40)
 
@@ -27,8 +27,8 @@ if name == "main": os.system('clear') logo() usage()
 url = input(f"{Fore.YELLOW}[ ? ]{Fore.GREEN} Website Target => ").strip()
 if url.count("/") == 2:
     url += "/"
-host = re.search(r'(https?://)?([^/]*)/?.*', url).group(2)
 
+host = re.search(r'(https?://)?([^/]*)/?.*', url).group(2)
 safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no)=> ").strip().lower()
 thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads => "))
 if safe_option == "yes":
