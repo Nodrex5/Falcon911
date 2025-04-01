@@ -25,7 +25,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '2.0 BETA'
+__version__ = '2.6 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
@@ -138,11 +138,11 @@ if __name__ == "__main__":
 
     monitor_thread = Thread(target=monitor_requests, daemon=True)
     monitor_thread.start()
-
+    
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-    try:
-        futures = [executor.submit(attack, url) for _ in range(100)]
-        concurrent.futures.wait(futures)
-    except KeyboardInterrupt:
-        set_flag(2)
-        print(f"{Fore.YELLOW}( FINISH ) {Fore.RED}Attack Stopped by user.{Fore.RESET}")
+        try:
+        	futures = [executor.submit(attack, url) for _ in range(100)]
+        	concurrent.futures.wait(futures)
+        except KeyboardInterrupt:
+        	set_flag(2)
+        	print(f"{Fore.YELLOW}( FINISH ) {Fore.RED}Attack Stopped by user.{Fore.RESET}")
