@@ -69,7 +69,7 @@ def httpcall(url):
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
-        headers = {
+    headers = {
         "User-Agent": ua.random,
         "X-Requested-With": "XMLHttpRequest",
         "Pragma": "no-cache",
