@@ -69,18 +69,38 @@ def httpcall(url):
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
     headers = {
-        "User-Agent": ua.random,
-        "X-Requested-With": "XMLHttpRequest",
-        "Pragma": "no-cache",
-        "Cache-Control": "max-age=0",
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": random.choice(["ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6", "en-US,en;q=0.9"]),
-        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com", "https://www.instagram.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
-        "DNT": "1",
-        "Connection": "keep-alive",
-        "X-Forwarded-For": fake.ipv4(),
-    }
+    "User-Agent": ua.random,
+    "X-Requested-With": "XMLHttpRequest",
+    "Pragma": "no-cache",
+    "Cache-Control": random.choice(["no-cache", "no-store", "max-age=0", "must-revalidate"]),
+    "Accept": random.choice([
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "application/json, text/plain, */*",
+        "*/*"
+    ]),
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": random.choice([
+        "ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6",
+        "en-US,en;q=0.9,en;q=0.8",
+        "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7"
+    ]),
+    "Referer": random.choice([
+        f"https://www.google.com/search?q={buildblock(random.randint(3, 15))}",
+        f"https://www.bing.com/search?q={buildblock(random.randint(3, 15))}",
+        f"https://www.yahoo.com/search?p={buildblock(random.randint(3, 15))}",
+        f"https://www.facebook.com/{buildblock(random.randint(5, 10))}"
+    ]),
+    "DNT": "1",
+    "Connection": "keep-alive",
+    "X-Forwarded-For": fake.ipv4(),
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-User": "?1",
+    "Sec-Fetch-Dest": "document",
+    "Origin": "https://www.google.com",
+}
 
     try:
         req = urllib.request.Request(request_url, headers=headers)
