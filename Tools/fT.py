@@ -1,4 +1,4 @@
-ienort urllib.request
+import urllib.request
 import concurrent.futures
 import random
 import re
