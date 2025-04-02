@@ -69,36 +69,28 @@ def httpcall(url):
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
-    headers = {
-    "User-Agent": ua.random,
-    "X-Requested-With": "Fetch",
-    "Pragma": "no-cache",
-    "Cache-Control": "no-cache",
-    "Accept": "*/*",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "fr-FR,fr;q=0.8,en-US;q=0.7",
-    "Referer": random.choice([
-        f"https://www.google.com/search?q={fake.word()}",
-        f"https://www.bing.com/search?q={fake.word()}",
-        f"https://www.facebook.com/{fake.word()}",
-        f"https://twitter.com/{fake.word()}"
-    ]),
-    "DNT": random.choice(["1", "0"]),
-    "Connection": "keep-alive",
-    "X-Forwarded-For": fake.ipv4(),
-    #"Via": f"1.1 {fake.hostname()}",
-    #"Upgrade-Insecure-Requests": "1",
-    #"Sec-Fetch-Site": random.choice(["same-origin", "cross-site", "none"]),
-    #"Sec-Fetch-Mode": random.choice(["navigate", "cors", "no-cors"]),
-    #"Sec-Fetch-User": "?1",
-    #"Sec-Fetch-Dest": random.choice(["document", "iframe", "image", "empty"]),
-    "Origin": random.choice([
-        "https://www.google.com",
-        "https://www.facebook.com",
-        "https://www.bing.com"
-    ]),
-    #"TE": "trailers"
-}
+        headers = {
+        "User-Agent": ua.random,
+        "X-Requested-With": "XMLHttpRequest",
+        "Pragma": "no-cache",
+        "Cache-Control": "no-cache",
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com"]) + "/?q=" + buildblock(random.randint(3, 15)),
+        "DNT": "1",
+        "Upgrade-Insecure-Requests": "1",
+        "Connection": "keep-alive",
+        # "Keep-Alive": random.randint(110,120),
+        # "Cookie": buildcookies(),
+        # "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Sec-Fetch-Dest": "document",
+        "X-Forwarded-For": fake.ipv4(),
+    }
+
 
     try:
         req = urllib.request.Request(request_url, headers=headers)
