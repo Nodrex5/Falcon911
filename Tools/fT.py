@@ -25,7 +25,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '2.8 BETA'
+__version__ = '2.9 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
