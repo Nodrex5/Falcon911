@@ -70,25 +70,16 @@ def httpcall(url):
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
     headers = {
-        "User-Agent": ua.random,
-        "X-Requested-With": "XMLHttpRequest",
-        "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
-        "Accept": "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com"]) + "/?q=" + buildblock(random.randint(3, 15)),
-        "DNT": "1",
-        "Upgrade-Insecure-Requests": "1",
-        "Connection": "keep-alive",
-        # "Keep-Alive": random.randint(110,120),
-        # "Cookie": buildcookies(),
-        # "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-User": "?1",
-        "Sec-Fetch-Dest": "document",
-        "X-Forwarded-For": fake.ipv4(),
+        'User-Agent': random.choice(uagent),
+        'Cache-Control': 'no-cache',
+        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Referer': random.choice(referer_list()) + buildblock(random.randint(0, 10)),
+        'Keep-Alive': str(random.randint(120, 130)),
+        'Connection': 'keep-alive',
+        'Host': host,
+        'X-Forwarded-For': random_ipFake()
+
     }
 
 
