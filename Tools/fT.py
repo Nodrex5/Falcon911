@@ -69,17 +69,18 @@ def httpcall(url):
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
-    headers = {
-        'User-Agent': random.choice(uagent),
-        'Cache-Control': 'no-cache',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Referer': random.choice(referer_list()) + buildblock(random.randint(0, 10)),
-        'Keep-Alive': str(random.randint(120, 130)),
-        'Connection': 'keep-alive',
-        'Host': host,
-        'X-Forwarded-For': random_ipFake()
-
+    headers={
+        "User-Agent": ua.random,
+        "X-Requested-With": "XMLHttpRequest",
+        "Pragma": "no-cache",
+        "Cache-Control": "max-age=0",
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": random.choice(["ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6", "en-US,en;q=0.9"]),
+        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com", "https://www.instagram.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "X-Forwarded-For": fake.ipv4(),
     }
 
 
