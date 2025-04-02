@@ -47,7 +47,7 @@ try:
                 print('soon ...')
         elif methodInput==3:
         	os.system('clear')
-        	fh_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Tools", "fT.py")
+        	fh_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Tools", "f3.py")
         	subprocess.run(["python", fh_path])
         else:
         	print(f"{Fore.RED}Not Found !")
