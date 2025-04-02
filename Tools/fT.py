@@ -71,20 +71,12 @@ def httpcall(url):
 
     headers = {
     "User-Agent": ua.random,
-    "X-Requested-With": random.choice(["XMLHttpRequest", "Fetch", ""]),
-    "Pragma": random.choice(["no-cache", ""]),
-    "Cache-Control": random.choice(["no-cache", "max-age=0", "must-revalidate"]),
-    "Accept": random.choice([
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-        "application/json, text/plain, */*",
-        "*/*"
-    ]),
-    "Accept-Encoding": random.choice(["gzip, deflate, br", "gzip, deflate", ""]),
-    "Accept-Language": random.choice([
-        "ar-SA,ar;q=0.9,en-US;q=0.8,en;q=0.7",
-        "en-US,en;q=0.9",
-        "fr-FR,fr;q=0.8,en-US;q=0.7"
-    ]),
+    "X-Requested-With": "Fetch",
+    "Pragma": "no-cache",
+    "Cache-Control": "no-cache",
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "fr-FR,fr;q=0.8,en-US;q=0.7",
     "Referer": random.choice([
         f"https://www.google.com/search?q={fake.word()}",
         f"https://www.bing.com/search?q={fake.word()}",
@@ -94,18 +86,18 @@ def httpcall(url):
     "DNT": random.choice(["1", "0"]),
     "Connection": "keep-alive",
     "X-Forwarded-For": fake.ipv4(),
-    "Via": f"1.1 {fake.hostname()}",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Site": random.choice(["same-origin", "cross-site", "none"]),
-    "Sec-Fetch-Mode": random.choice(["navigate", "cors", "no-cors"]),
-    "Sec-Fetch-User": "?1",
-    "Sec-Fetch-Dest": random.choice(["document", "iframe", "image", "empty"]),
+    #"Via": f"1.1 {fake.hostname()}",
+    #"Upgrade-Insecure-Requests": "1",
+    #"Sec-Fetch-Site": random.choice(["same-origin", "cross-site", "none"]),
+    #"Sec-Fetch-Mode": random.choice(["navigate", "cors", "no-cors"]),
+    #"Sec-Fetch-User": "?1",
+    #"Sec-Fetch-Dest": random.choice(["document", "iframe", "image", "empty"]),
     "Origin": random.choice([
         "https://www.google.com",
         "https://www.facebook.com",
         "https://www.bing.com"
     ]),
-    "TE": "trailers"
+    #"TE": "trailers"
 }
 
     try:
