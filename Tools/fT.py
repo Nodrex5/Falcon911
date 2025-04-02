@@ -25,7 +25,7 @@ flag = 0
 safe = False
 
 # معلومات الأداة
-__version__ = '2.8 BETA'
+__version__ = '2.9 BETA'
 __author__ = "Al-Mohammady Team"
 __method__ = 'HTTP V2 BETA'
 
@@ -72,10 +72,11 @@ def httpcall(url):
         "User-Agent": ua.random,
         "X-Requested-With": "XMLHttpRequest",
         "Pragma": "no-cache",
-        "Cache-Control": "no-cache",
+        "Cache-Control": "max-age=0",
+        "Cookie": f"{buildblock(random.randint(3,15))}={buildblock(random.randint(3,15))}",
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Language": random.choice(["ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6", "en-US,en;q=0.9"]),
         "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com", "https://www.instagram.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
         "DNT": "1",
         "Connection": "keep-alive",
