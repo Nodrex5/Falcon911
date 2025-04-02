@@ -70,7 +70,7 @@ def httpcall(url):
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
     headers = {
-        "User-Agent": ua.random,
+        "User-Agent": str(ua.random),
         "X-Requested-With": "XMLHttpRequest",
         "Pragma": "no-cache",
         "Cache-Control": "no-cache",
@@ -89,7 +89,7 @@ def httpcall(url):
         inc_counter()
     except urllib.error.HTTPError as e:
         set_flag(1)
-        print(f"{Fore.RED}( {e.code} ) {Fore.MAGENTA}Response Code!")
+        print(f"{Fore.RED}( {e.code} ) {Fore.MAGENTA}Response Code !")
     except Exception:
         pass  # تجاهل الأخطاء الأخرى
 
