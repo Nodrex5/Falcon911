@@ -1,4 +1,4 @@
-import urllib.request
+ienort urllib.request
 import concurrent.futures
 import random
 import re
@@ -69,20 +69,19 @@ def httpcall(url):
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
 
-    headers={
+    headers = {
         "User-Agent": ua.random,
         "X-Requested-With": "XMLHttpRequest",
         "Pragma": "no-cache",
-        "Cache-Control": "max-age=0",
+        "Cache-Control": "no-cache",
         "Accept": "*/*",
         "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": random.choice(["ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6", "en-US,en;q=0.9"]),
-        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com", "https://www.instagram.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": random.choice(["https://www.google.com", "https://www.bing.com", "https://www.yahoo.com"]) + f"/?q={buildblock(random.randint(3, 15))}",
         "DNT": "1",
         "Connection": "keep-alive",
         "X-Forwarded-For": fake.ipv4(),
     }
-
 
     try:
         req = urllib.request.Request(request_url, headers=headers)
