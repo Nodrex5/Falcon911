@@ -68,38 +68,44 @@ def httpcall(url):
     """إرسال طلب HTTP."""
     payload = f"{buildblock(random.randint(3, 16))}={buildblock(random.randint(3, 16))}"
     request_url = f"{url}?{payload}" if '?' not in url else f"{url}&{payload}"
+
     headers = {
     "User-Agent": ua.random,
-    "X-Requested-With": "XMLHttpRequest",
-    "Pragma": "no-cache",
-    "Cache-Control": random.choice(["no-cache", "no-store", "max-age=0", "must-revalidate"]),
+    "X-Requested-With": random.choice(["XMLHttpRequest", "Fetch", ""]),
+    "Pragma": random.choice(["no-cache", ""]),
+    "Cache-Control": random.choice(["no-cache", "max-age=0", "must-revalidate"]),
     "Accept": random.choice([
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         "application/json, text/plain, */*",
         "*/*"
     ]),
-    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Encoding": random.choice(["gzip, deflate, br", "gzip, deflate", ""]),
     "Accept-Language": random.choice([
-        "ar-IQ,ar;q=0.9,en-GB;q=0.8,en;q=0.7,en-US;q=0.6",
-        "en-US,en;q=0.9,en;q=0.8",
-        "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
-        "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7"
+        "ar-SA,ar;q=0.9,en-US;q=0.8,en;q=0.7",
+        "en-US,en;q=0.9",
+        "fr-FR,fr;q=0.8,en-US;q=0.7"
     ]),
     "Referer": random.choice([
-        f"https://www.google.com/search?q={buildblock(random.randint(3, 15))}",
-        f"https://www.bing.com/search?q={buildblock(random.randint(3, 15))}",
-        f"https://www.yahoo.com/search?p={buildblock(random.randint(3, 15))}",
-        f"https://www.facebook.com/{buildblock(random.randint(5, 10))}"
+        f"https://www.google.com/search?q={fake.word()}",
+        f"https://www.bing.com/search?q={fake.word()}",
+        f"https://www.facebook.com/{fake.word()}",
+        f"https://twitter.com/{fake.word()}"
     ]),
-    "DNT": "1",
+    "DNT": random.choice(["1", "0"]),
     "Connection": "keep-alive",
     "X-Forwarded-For": fake.ipv4(),
+    "Via": f"1.1 {fake.hostname()}",
     "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Site": "same-origin",
-    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": random.choice(["same-origin", "cross-site", "none"]),
+    "Sec-Fetch-Mode": random.choice(["navigate", "cors", "no-cors"]),
     "Sec-Fetch-User": "?1",
-    "Sec-Fetch-Dest": "document",
-    "Origin": "https://www.google.com",
+    "Sec-Fetch-Dest": random.choice(["document", "iframe", "image", "empty"]),
+    "Origin": random.choice([
+        "https://www.google.com",
+        "https://www.facebook.com",
+        "https://www.bing.com"
+    ]),
+    "TE": "trailers"
 }
 
     try:
