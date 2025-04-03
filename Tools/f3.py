@@ -24,7 +24,7 @@ class AdvancedHTTPFlooder:
         self.config = {
             'VERSION': "10.0 EDU-PRO",
             'AUTHOR': "CyberSecurity Research Lab",
-            'MAX_THREADS': 150,  # Balanced for educational use
+            'MAX_THREADS': 200,  # Balanced for educational use
             'REQUEST_TIMEOUT': 4,
             'MAX_REQUESTS': 1500,
             'SAFE_MODE': True,
