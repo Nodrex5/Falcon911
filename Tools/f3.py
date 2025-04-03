@@ -177,12 +177,12 @@ class AdvancedHTTPFlooder:
     def monitor_defenses(self):
         """Monitor for defense systems and activate shadow mode"""
         while True:
-            time.sleep(30)
+            time.sleep(3)
             # Simulate detection (in real implementation would analyze responses)
             if random.random() < 0.1:  # 10% chance to trigger
                 self.is_under_monitoring = True
                 print(f"{Fore.YELLOW}[SHADOW] Defense systems detected! Activating stealth...{Fore.RESET}")
-                time.sleep(300)  # Stay in shadow mode for 5 minutes
+                time.sleep(3)  # Stay in shadow mode for 5 minutes
                 self.is_under_monitoring = False
                 print(f"{Fore.GREEN}[SHADOW] Stealth mode deactivated{Fore.RESET}")
 
