@@ -160,12 +160,12 @@ class AdvancedHTTPFlooder:
         """Get custom settings from user"""
         try:
             # عدد الثريدات
-            threads = int(input(f"{Fore.BLUE}[?] Enter number of threads (default {self.config['MAX_THREADS']}): {Fore.RESET}") or self.config['MAX_THREADS']
+            threads = int(input(f"{Fore.BLUE}[?] Enter number of threads (default {self.config['MAX_THREADS']}): {Fore.RESET}") or self.config['MAX_THREADS'])
             if 1 <= threads <= 1000:  # حد أقصى لأغراض السلامة
                 self.config['MAX_THREADS'] = threads
             
             # مدة الهجوم
-            duration = int(input(f"{Fore.BLUE}[?] Enter attack duration in seconds (default {self.config['ATTACK_DURATION']}): {Fore.RESET}") or self.config['ATTACK_DURATION']
+            duration = int(input(f"{Fore.BLUE}[?] Enter attack duration in seconds (default {self.config['ATTACK_DURATION']}): {Fore.RESET}") or self.config['ATTACK_DURATION'])
             if duration > 0:
                 self.config['ATTACK_DURATION'] = duration
                 
